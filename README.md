@@ -22,7 +22,7 @@ novatech-revenue-intelligence-dashboard/
 │   ├── NovaTech_dashboard_export.pdf
 │   ├── NovaTech_dashboard_annotated.pdf
 │   ├── NovaTech_dashboard_executive_summary.md
-│   ├── NovaTech_report_to_Sarah_Chen_reframed.md
+│   ├── NovaTech_report_to_Sarah_Chen.md
 │   ├── NovaTech_data_verification_log_final.md
 │   ├── NovaTech_Q_exploration_log_final.md
 │   └── NovaTech_Q_exploration_log_topic_results.md
