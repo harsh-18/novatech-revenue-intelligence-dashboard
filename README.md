@@ -29,7 +29,8 @@ novatech-revenue-intelligence-dashboard/
 ├── screenshots/
 │   ├── dashboard/
 │   ├── before_topic/
-│   └── after_topic/
+│   ├── after_topic/
+│   └── other_screenshots/
 └── source_notes/
     └── dataset_scope_and_metric_notes.md
 ```
