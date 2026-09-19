@@ -19,6 +19,9 @@ The dashboard was designed for Sarah Chen, VP of Revenue, to support weekly oper
 novatech-revenue-intelligence-dashboard/
 ├── README.md
 ├── deliverables/
+│   ├── Customer Health Dashboard.pdf
+│   ├── Marketing Funnel Dashboard.pdf
+│   ├── Sales Pipeline Dashboard.pdf
 │   ├── NovaTech_dashboard_export.pdf
 │   ├── NovaTech_dashboard_annotated.pdf
 │   ├── NovaTech_dashboard_executive_summary.md
@@ -150,7 +153,11 @@ screenshots/
 │   ├── 01_support_tickets_spice_import_3000_rows.png
 │   ├── 01_support_tickets_spice_import_details.png
 │   ├── 01_unified_revenue_dataset_summary.png
-│   └── 01_unified_revenue_spice_import_63420_rows.png
+│   ├── 01_unified_revenue_spice_63420_rows_imported.png
+│   ├── 01_unified_revenue_spice_dataset_summary.png
+│   ├── 01_unified_revenue_spice_import_63420_rows.png
+│   ├── 01_unified_revenue_spice_join_structure.png
+│   └── 01_unified_revenue_spice_source_datasets.png
 ├── 02_data_preparation/
 │   ├── 02_calculated_column_days_to_close_formula.png
 │   ├── 02_calculated_columns_crm_editor.png
@@ -179,27 +186,34 @@ screenshots/
 │   ├── 03_sales_pipeline_opportunity_count_stage.png
 │   └── 03_sales_pipeline_sheet_kpis_top.png
 ├── 04_dashboard_interactivity/
-│   ├── 04_interactive_filter_controls_marketing_pipeline.png
-│   ├── 04_one_click_filter_action_config.png
-│   ├── 04_one_click_filter_action_in_action.png
-│   ├── 04_cross_sheet_navigation_action_config.png
-│   └── 04_customer_health_unified_visual_ticket_vs_revenue.png
+│   ├── 04_customer_health_unified_visual.png
+│   ├── 04_deal_stage_filter_action_before.png
+│   ├── 04_deal_stage_filter_action_lost_selected.png
+│   ├── 04_marketing_filter_all_27_1_percent.png
+│   ├── 04_marketing_filter_direct_mail_50_7_percent.png
+│   ├── 04_marketing_filter_email_9_4_percent.png
+│   ├── 04_navigation_action_marketing_source.png
+│   ├── 04_navigation_action_sales_pipeline_destination.png
+│   ├── 04_sales_region_filter_all_496_opportunities.png
+│   └── 04_sales_region_filter_east_128_opportunities.png
 ├── 05_dashboard_annotations/
-│   ├── 05_annotation_marketing_funnel.png
-│   ├── 05_annotation_sales_pipeline.png
-│   └── 05_annotation_customer_health.png
+│   ├── 05_customer_health_annotations.png
+│   ├── 05_marketing_funnel_annotations.png
+│   └── 05_sales_pipeline_annotations.png
 ├── 06_before_topic_q/
 │   ├── 06_baseline_q1_crm_deals_won.png
 │   ├── 06_baseline_q2_marketing_response_rate.png
 │   └── 06_baseline_q3_unresolved_support_tickets.png
 ├── 07_topic_setup/
 │   ├── 07_quicksight_home_before_topic.png
+│   ├── 07_topic_active_published_version_2.png
 │   ├── 07_topic_created_version_1.png
 │   ├── 07_topic_dataset_unified_revenue.png
-│   ├── 07_topic_active_published_version_2.png
-│   ├── 07_topic_owner_permissions_share.png
 │   ├── 07_topic_overview_description.png
-│   └── 07_topic_semantic_layer_field_synonyms.png
+│   ├── 07_topic_owner_permissions_share.png
+│   ├── 07_topic_semantic_layer_campaign_channel_description_synonyms.png
+│   ├── 07_topic_semantic_layer_deal_value_description_synonyms.png
+│   └── 07_topic_semantic_layer_ticket_id_description_synonyms.png
 ├── 08_after_topic_q/
 │   ├── 08_post_topic_q1_crm_deals_won.png
 │   ├── 08_post_topic_q2_marketing_response_rate.png
@@ -239,27 +253,27 @@ screenshots/
    - `screenshots/01_datasets_spice/` demonstrates 100% SPICE import for all source datasets with matching row and column counts.
    - `screenshots/09_submission_evidence/` contains individual verification query screenshots.
 
-2. **Transform and join datasets using no-code data preparation tools**
-   - **All four datasets in SPICE**: Proved by `01_crm_deals_spice_import_499_rows.png`, `01_marketing_campaigns_spice_import_2240_rows.png`, `01_support_tickets_spice_import_3000_rows.png`, and `01_unified_revenue_spice_import_63420_rows.png`.
+2. **Transform and join datasets using no-code data preparation tools (Fully Met)**
+   - **All four datasets in SPICE**: Proved by `01_crm_deals_spice_import_499_rows.png`, `01_marketing_campaigns_spice_import_2240_rows.png`, `01_support_tickets_spice_import_3000_rows.png`, and `01_unified_revenue_spice_import_63420_rows.png` (with detailed join structure and source dataset summaries).
    - **Data type corrections**: Proved by `02_crm_data_type_correction_step.png`, `02_marketing_12_columns_datatype_changed.png`, and `02_support_9_columns_datatype_changed.png`.
    - **Calculated fields**: Proved by `02_calculated_column_days_to_close_formula.png` (`dateDiff`), `02_calculated_field_campaign_roi_formula.png`, and `02_calculated_field_response_rate_formula.png`.
    - **Unified dataset joins**: Proved by `02_unified_join1_crm_anchor_marketing_config.png` and `02_unified_join2_support_tickets_config.png`, confirming CRM as the anchor table with left joins on `account_id`.
 
-3. **Dashboard Design & Interactivity**
-   - **Multi-page dashboard**: Proved by `03_marketing_funnel_sheet_kpis_top.png`, `03_sales_pipeline_sheet_kpis_top.png`, and `03_customer_health_sheet_kpis_top.png` and `NovaTech_dashboard_export.pdf`.
-   - **Customer Health Unified Visual**: Documented in `04_customer_health_unified_visual_ticket_vs_revenue.png`.
-   - **Interactive Filter Controls**: Documented in `04_interactive_filter_controls_marketing_pipeline.png`.
-   - **One-Click Filtering Action**: Documented in `04_one_click_filter_action_config.png` and `04_one_click_filter_action_in_action.png`.
-   - **Cross-Sheet Navigation**: Documented in `04_cross_sheet_navigation_action_config.png`.
+3. **Dashboard Design & Interactivity (Fully Met)**
+   - **Multi-page dashboard**: Proved by `03_marketing_funnel_sheet_kpis_top.png`, `03_sales_pipeline_sheet_kpis_top.png`, `03_customer_health_sheet_kpis_top.png`, and `NovaTech_dashboard_export.pdf`.
+   - **Customer Health Unified Visual**: Proved by `04_customer_health_unified_visual.png`, demonstrating the "At-Risk Accounts — Support Volume and Deal Revenue" table built from the unified dataset combining CRM revenue with Support tickets.
+   - **Interactive Filter Controls**: Proved by `04_marketing_filter_all_27_1_percent.png`, `04_marketing_filter_direct_mail_50_7_percent.png`, `04_marketing_filter_email_9_4_percent.png`, and `04_sales_region_filter_all_496_opportunities.png`, `04_sales_region_filter_east_128_opportunities.png`.
+   - **One-Click Filtering Action**: Proved by `04_deal_stage_filter_action_before.png` and `04_deal_stage_filter_action_lost_selected.png`, demonstrating one-click filtering on the Opportunity Count by Deal Stage chart.
+   - **Cross-Sheet Navigation**: Proved by `04_navigation_action_marketing_source.png` and `04_navigation_action_sales_pipeline_destination.png`, linking from Marketing Funnel to Sales Pipeline.
 
-4. **AI-Powered Natural Language Querying**
+4. **AI-Powered Natural Language Querying (Fully Met)**
    - **Baseline Quick Chat**: Proved in `06_before_topic_q/`.
-   - **Topic Setup & Semantic Layer**: Proved in `07_topic_setup/` (active version 2, instructions, permissions, and field synonyms).
+   - **Topic Setup & Semantic Layer**: Proved in `07_topic_setup/` with `07_topic_semantic_layer_campaign_channel_description_synonyms.png`, `07_topic_semantic_layer_deal_value_description_synonyms.png`, and `07_topic_semantic_layer_ticket_id_description_synonyms.png` showing field descriptions, semantic roles, and synonyms.
    - **Post-Topic Quick Chat**: Proved in `08_after_topic_q/`.
    - **Q Exploration Log**: Fully documented in `deliverables/NovaTech_Q_exploration_log_final.md` and `09_submission_evidence/`.
 
-5. **Data-Driven Business Insights & Annotations**
-   - **Visible text annotations on sheets**: Documented in `05_dashboard_annotations/` and `deliverables/NovaTech_dashboard_annotated.pdf`.
+5. **Data-Driven Business Insights & Annotations (Fully Met)**
+   - **Visible text annotations on sheets**: Proved by `05_customer_health_annotations.png`, `05_marketing_funnel_annotations.png`, and `05_sales_pipeline_annotations.png`, and exported in `deliverables/NovaTech_dashboard_annotated.pdf`.
    - **Three-part structure**: Every annotation adheres strictly to (1) Quantified Finding, (2) Business Implication, and (3) Recommended Action.
    - **Executive Report**: `deliverables/NovaTech_report_to_Sarah_Chen.md` and `deliverables/NovaTech_dashboard_executive_summary.md`.
 
