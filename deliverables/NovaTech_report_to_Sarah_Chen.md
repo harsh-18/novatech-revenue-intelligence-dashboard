@@ -53,13 +53,41 @@ These controls matter because a one-to-many relationship can multiply rows when 
 
 ## How Topic Configuration Improved Q Accuracy
 
-Amazon Q in QuickSight is the natural-language capability that allows users to ask business questions about dashboard data. Before the Topic was configured, the baseline Quick Chat tests for deals won, marketing response rate, and unresolved tickets relied mainly on broad matching of question wording to available data fields. That approach is potentially ambiguous in a unified dataset because one sales opportunity can be associated with multiple marketing records or support tickets.
+Amazon Q in QuickSight is the natural-language capability that allows revenue leaders to ask business questions about dashboard data. To evaluate its reliability, I tested three core business questions in a baseline Quick Chat session before configuring the Topic, and then re-tested them against the published Topic. The Topic configuration applied semantic metadata, field descriptions, business synonyms, and custom instructions to govern how Q interprets NovaTech's unified data.
 
-The Topic improved Q accuracy by adding business descriptions, synonyms, and custom instructions that define NovaTech’s key measures. For example, it identifies a ticket identifier as a unique support-ticket record and instructs Q to count unique tickets when calculating ticket volume. It also defines an unresolved ticket as a ticket without a recorded resolution date. These instructions make the answer to an unresolved-ticket question follow the agreed support definition rather than a generic count of repeated joined rows.
+Here is the direct comparison of the before-and-after evidence across the three questions:
 
-The same configuration improved sales and marketing questions. Synonyms such as “deal,” “opportunity,” and “sales opportunity” help Q interpret a question about deals won as a count of unique sales opportunities. Business guidance for campaign response rate tells Q to interpret the measure as the share of campaign records that received a response. In addition, synonyms such as “channel,” “marketing channel,” and “acquisition channel” help Q connect common executive language to the correct campaign dimension.
+### 1. Sales Deals Won
+- **Question asked:** "How many CRM deals were won?"
+- **Baseline Quick Chat answer:** Q returned 315 won CRM deals, noting that the count was based on distinct opportunities where the deal stage was marked as Won.
+- **Topic-scoped answer:** Q confirmed 315 CRM deals won, consistently evaluating distinct opportunities in the Won stage.
+- **How Topic configuration affected accuracy:** In a unified dataset where CRM deals are joined to multiple marketing touchpoints and support tickets, a naive query risks counting repeated joined rows rather than distinct deals. The Topic resolved this by defining synonyms (such as "deal," "opportunity," and "sales opportunity") mapped directly to unique opportunity identifiers, setting the default aggregation to distinct count, and establishing business rules for deal stages. This ensured Q always returns the accurate count of 315 distinct won opportunities instead of an inflated row count.
 
-The Topic-scoped answers therefore aligned more closely with the dashboard’s business definitions than the baseline Quick Chat answers. The configuration does not remove the need to validate results: the unified dataset contains one-to-many relationships, so revenue and campaign-spend totals still require the safeguards defined in the Topic. However, the before-and-after tests show that descriptions, synonyms, and counting instructions reduce ambiguity and make common executive questions more consistent with NovaTech’s defined dashboard metrics.
+### 2. Marketing Campaign Response Rate
+- **Question asked:** "What is the marketing campaign response rate?"
+- **Baseline Quick Chat answer:** Q returned an overall marketing response rate of 27.08%, derived from 566 responding leads out of 2,090 unique leads in the unified dataset.
+- **Topic-scoped answer:** Q confirmed 27.08% across the 2,090 unique leads within the unified CRM-anchored dataset.
+- **How Topic configuration affected accuracy:** In the unjoined marketing source file, the response rate was 27.2% across 2,240 leads and 609 responses. In the CRM-anchored unified dataset, 150 orphan marketing leads were excluded because their accounts did not exist in CRM, leaving 2,090 unique leads. The Topic improved Q accuracy by providing custom instructions that defined the response rate calculation as unique responding leads divided by total unique leads, and mapping channel synonyms (such as "marketing channel" and "acquisition channel"). This prevented Q from erroneously summing non-distinct records, misinterpreting binary response indicators, or producing skewed percentages.
+
+### 3. Unresolved Support Tickets
+- **Question asked:** "How many unresolved support tickets are there?"
+- **Baseline Quick Chat answer:** Q reported 58 unresolved support tickets, identifying tickets with no recorded resolution date.
+- **Topic-scoped answer:** Q confirmed 58 unresolved support tickets based on unrecorded resolution dates.
+- **How Topic configuration affected accuracy:** In the raw support dataset, 59 tickets lacked resolution timestamps out of 3,000 total tickets. Within the CRM-anchored unified dataset, one orphan unresolved ticket was excluded, leaving 58 unresolved tickets. Crucially, support ticket data does not contain a dedicated text status column labeled "Unresolved"—resolution is indicated solely by the presence or absence of a timestamp. The Topic's custom instructions established the explicit business rule that unresolved means a blank or unrecorded resolution date and instructed Q to count unique ticket identifiers. Without this semantic guidance, natural-language queries could fail to interpret what unresolved meant or produce inaccurate counts by counting repeated rows from joined tables.
+
+## Where AI Analysis Agreed or Disagreed with the Dashboard
+
+Comparing Amazon Q's natural-language answers to the interactive dashboard visuals shows both clear alignments and important distinctions:
+
+### Where AI Analysis Agreed with the Dashboard
+- **Channel Conversion:** Q identified Direct Mail as having the highest conversion rate at 53.0% (79 responses from 149 leads), which matched the Marketing Funnel channel performance ranking.
+- **Deal Sizing by Company Tier:** Q confirmed that Enterprise accounts carried the highest average deal value at approximately $1,589, while Large accounts averaged approximately $1,257, matching the Sales Pipeline breakdown.
+- **Support Ticket Resolution:** Q verified that Critical priority tickets had an average resolution time of approximately 1.79 days compared to 1.97 days for Low priority tickets, consistent with Customer Health visual trends.
+- **Campaign Spend Inefficiencies:** Q flagged that Partner Referral and Paid Social represented significant overspend where campaign expenditure exceeded attributed revenue, reinforcing the spend-versus-revenue comparison on the Marketing Funnel sheet.
+
+### Where AI Analysis Disagreed or Required Caution
+- **Dataset Grain and Row Counts:** When queried against original source tables, Q returned raw source counts (499 CRM deals, 2,240 marketing leads, and 3,000 support tickets with 59 unresolved). In contrast, the dashboard uses the CRM-anchored unified dataset (496 unified opportunities, 2,090 leads, and 2,790 tickets with 58 unresolved). These differences represent reconciliation items caused by orphan account filtering rather than calculation errors.
+- **Cross-Source Aggregations:** For questions combining metrics across sources—such as identifying top accounts by ticket volume alongside total deal revenue—Q displayed account tables. However, joined datasets can duplicate deal values across multiple support tickets if summed directly. While the visual dashboard applies distinct-count and governed aggregations, natural-language answers combining revenue and ticket counts must always be validated at the account grain before guiding financial commitments.
 
 ## Recommendations for the Revenue Team
 
@@ -69,7 +97,7 @@ The Topic-scoped answers therefore aligned more closely with the dashboard’s b
 4. Investigate orphan Marketing and Support accounts separately so that activity outside CRM is not mistaken for missing demand or missing support.
 5. Establish governed unique-count measures and account-level rollups before using joined revenue or return-on-investment figures for investment allocation.
 
-## Natural-Language Analysis
+## Natural-Language Analysis and Topic Governance
 
 I created and published a Topic named NovaTech Revenue Intelligence Topic using the unified dataset. A Topic is a defined business vocabulary and set of instructions that helps Amazon Q interpret natural-language questions consistently. It includes custom instructions for the shared account identifier, unique-count rules, deal-stage meanings, response-rate logic, and unresolved-ticket logic. This creates a useful semantic layer for natural-language exploration.
 
